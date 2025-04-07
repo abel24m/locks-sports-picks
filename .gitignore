@@ -45,3 +45,5 @@ venv
 
 #Python Cache
 __pycache__
+
+.idea
