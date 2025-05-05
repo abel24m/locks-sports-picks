@@ -17,7 +17,7 @@ function MyComponent() {
         const json = await response.json();
         setData(json);
       } catch (e: unknown) {
-        setError(e);
+        console.log(e.message)
       } finally {
         setLoading(false);
       }
