@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 function MyComponent() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,8 +16,8 @@ function MyComponent() {
         }
         const json = await response.json();
         setData(json);
-      } catch (e: any) {
-        setError(e.message || "an error occured");
+      } catch (e: Error) {
+        setError(e);
       } finally {
         setLoading(false);
       }

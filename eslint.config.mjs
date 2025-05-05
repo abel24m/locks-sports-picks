@@ -13,8 +13,4 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 ];
 
-export interface ITestState{
-  listItems : any // eslint-disable-line @typescript-eslint/no-explicit-any
-}
-
 export default eslintConfig;
