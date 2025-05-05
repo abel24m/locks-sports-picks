@@ -30,7 +30,9 @@ function MyComponent() {
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    if (typeof error !== 'undefined') {
+      return <p>Error: {error.message}</p>;
+    }
   }
 
   return (
