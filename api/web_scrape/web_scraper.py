@@ -1,5 +1,9 @@
 from datetime import datetime, timedelta
+from api.web_scrape.support.save_data import save_mlb_data
+import threading
 
+from api.web_scrape.analyst.analyst import Analyst
+from api.web_scrape.web_scrapers.covers_scraper import CoversScraper
 from support.csv_writer import CSVWriter
 from web_scrapers.bovada_scraper import BovadaWebScraper
 
@@ -14,9 +18,12 @@ leagues_to_scrape = ["MLB"]
 
 def initiate_web_scrape():
     bov_scraper = BovadaWebScraper(leagues_to_scrape)
+    cover_scraper = CoversScraper(leagues_to_scrape)
+    analyst = Analyst()
     bov_scraper.start_scrape()
-    csv_writer = CSVWriter(today_file_path)
-    csv_writer.write_bovada_data(bov_scraper)
+    cover_scraper.start_scrape()
+    analyst.analyze_mlb(cover_scraper.mlb_matches)
+    save_mlb_data(cover_scraper.mlb_matches)
 
 
 # web_scrape()

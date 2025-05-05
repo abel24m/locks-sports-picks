@@ -32,7 +32,7 @@ class BovadaWebScraper:
         "MLB" : False
     }
 
-    driver = webdriver.Chrome()
+
     today_date = datetime.now().strftime("%m-%d-%Y")
     delay = 10
     ncaab_matches = []
@@ -41,26 +41,27 @@ class BovadaWebScraper:
 
 
     def __init__(self, list_of_leagues: List[str]):
+        self.driver = webdriver.Chrome()
         self.leagues = list_of_leagues
 
 
     def start_scrape(self):
         for league in self.leagues:
             match league:
-                case("NCAAB"):
-                    try:
-                        self.scrape_ncaab()
-                    except TimeoutException:
-                        print (f"Bovada NCAAB url took too much time to load!")
-                case("NBA"):
-                    try:
-                        delay = 15
-                        for url in self.__urls.get("NBA"):
-                            self.driver.get(url)
-                            WebDriverWait(BovadaWebScraper.driver, delay).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "sp-next-events[waiting-for-files-to-load = 'success!']")))
-                            self.scrape_nba()
-                    except TimeoutException:
-                        print (f"Bovada NBA url took too much time to load!")
+                # case("NCAAB"):
+                #     try:
+                #         self.scrape_ncaab()
+                #     except TimeoutException:
+                #         print (f"Bovada NCAAB url took too much time to load!")
+                # case("NBA"):
+                #     try:
+                #         delay = 15
+                #         for url in self.__urls.get("NBA"):
+                #             self.driver.get(url)
+                #             WebDriverWait(BovadaWebScraper.driver, delay).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "sp-next-events[waiting-for-files-to-load = 'success!']")))
+                #             self.scrape_nba()
+                #     except TimeoutException:
+                #         print (f"Bovada NBA url took too much time to load!")
                 case("MLB"):
                     try:
                         self.scrape_mlb()
@@ -90,7 +91,7 @@ class BovadaWebScraper:
         url_set = self.__urls.get("MLB")
         for url in url_set:
             self.driver.get(url)
-            WebDriverWait(BovadaWebScraper.driver, self.delay).until(EC.presence_of_all_elements_located(
+            WebDriverWait(self.driver, self.delay).until(EC.presence_of_all_elements_located(
                 (By.CSS_SELECTOR, "sp-next-events[waiting-for-files-to-load = 'success!']")))
             html = self.driver.page_source
             soup = BeautifulSoup(html, "html.parser")
