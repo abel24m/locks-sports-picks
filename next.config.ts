@@ -5,7 +5,7 @@ const nextConfig = {
     return [
       {
         source: '/:path*',
-        destination : process.env.REACT_APP_API_URL
+        destination : process.env.REACT_APP_API_URL,
       },
     ]
   },
